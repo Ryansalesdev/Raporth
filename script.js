@@ -52,22 +52,24 @@ const icons = {
 
 /* ===== SERVICES ===== */
 const services = [
-  { i:'building', t:'Construção e reformas comerciais e residenciais', d:'Construção com definição de escopo, planejamento de obra e acompanhamento da execução.' },
-  { i:'ruler',    t:'Projetos arquitetônicos ',   d:'Projeto completo com plantas, cortes, fachadas e orientações para execução.' },
-  { i:'hardhat',  t:'Gerenciamento de obras',  d:'Coordenação completa de prazo, custo e qualidade. Você acompanha tudo em tempo real.' },
-  { i:'wrench',   t:'Construção de flats',      d:'Projeto e obra de kitnets com definição de módulos, layout e organização das etapas construtivas.' },
-  { i:'clip',     t:'Gestão de obras',     d:'Acompanhamento técnico da obra com controle de etapas, equipes e sequência construtiva.' },
-  { i:'layers',   t:'Reformas comerciais e residenciais',       d:'Reforma com gestão de equipes, sequência de execução e controle das intervenções.' },
+  { i:'building', t:'Construções residenciais e comerciais', d:'Executamos obras do planejamento à entrega, com rigor técnico, gestão eficiente e atenção aos detalhes em cada etapa.' },
+  { i:'ruler',    t:'Projetos arquitetônicos ',   d:'Projetos completos e personalizados, desenvolvidos para unir funcionalidade, estética e viabilidade de execução. Gerenciamento de obras' },
+  { i:'hardhat',  t:'Gerenciamento de obras',  d:'Coordenamos cronograma, custos, equipes e qualidade, garantindo transparência e acompanhamento durante toda a obra.' },
+  { i:'wrench',   t:'Especialistas em flats',      d:'Projetamos e executamos flats e kitnets com foco em otimização de espaço, funcionalidade e valorização do investimento.' },
+  { i:'clip',     t:'Casas de alto padrão',     d:'Projetos e obras desenvolvidos com soluções personalizadas, acabamentos refinados e execução compatível com o nível de exigência de cada cliente.' },
+  { i:'layers',   t:'Reformas comerciais e residenciais',       d:'Reformas planejadas para modernizar ambientes, minimizar impactos na execução e assegurar acabamento de alto padrão.' },
 ];
 document.getElementById('servicesGrid').innerHTML = services.map((s,i) => `
   <article class="service reveal d${(i%4)+1}">
-    <div class="icon">${icons[s.i]}</div>
+    <div class="icon">
+      <img src="assets/logo.png" alt="Logo">
+    </div>
     <h3>${s.t}</h3>
     <p>${s.d}</p>
   </article>
 `).join('');
-document.querySelectorAll('#servicesGrid .reveal').forEach(el => io.observe(el));
 
+document.querySelectorAll('#servicesGrid .reveal').forEach(el => io.observe(el));
 /* ===== PORTFOLIO ===== */
 
 

@@ -23,7 +23,12 @@
   --shadow-glass:0 8px 32px rgba(30,15,5,.45);
   --grad-dark:linear-gradient(180deg,#3a1f10 0%,#1f110a 100%);
   --grad-brand:linear-gradient(135deg,#552f1b 0%,#3a1f10 100%);
-  --grad-hero:linear-gradient(135deg,rgba(20,11,5,.88) 0%,rgba(34,18,8,.6) 50%,rgba(58,31,16,.45) 100%);
+--grad-hero: linear-gradient(
+  90deg, 
+  rgba(25, 14, 3, 0.96) 0%, 
+  rgba(49, 22, 8, 0.85) 45%, 
+  rgba(30, 15, 6, 0.55) 60%
+);
 }
 *{
   box-sizing:border-box;
@@ -49,7 +54,7 @@ img{
 }
 
 a{
-  color:inherit;
+  color:#ffffff;
   text-decoration:none;
   transition:color .3s var(--ease)
 }
@@ -59,7 +64,7 @@ ul{
 }
 
 ::selection{
-  background:rgba(85,47,27,.25);
+  background:rgba(85, 27, 27, 0.25);
   color:var(--ink);
 }
 
@@ -118,12 +123,12 @@ ul{
 
 /* Typography */
 .display{
-  font-family:'Sora',sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
   font-weight:700;
   letter-spacing:-.035em;
   line-height:1.02;
   color:var(--ink);
-  font-size:clamp(2.25rem,5vw,3.75rem);
+  font-size:clamp(1.0rem,5vw,2.75rem);
   margin-bottom:1.5rem;
 }
 .display.light{
@@ -281,7 +286,7 @@ ul{
 }
 
 #navbar.scrolled .nav{
-  background: rgba(58, 30, 15, 0.85);
+  background: #3c2113;
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(212, 180, 140, 0.15);
   box-shadow: 0 6px 20px rgba(0,0,0,.15);
@@ -452,17 +457,17 @@ ul{
   }
   }
 .hero h1.display{
-  font-size:clamp(2.75rem,7vw,6rem);
+  font-size:clamp(2.75rem,4vw,4rem);
   color:#fff;
   margin-bottom:2rem;
   animation:fade-up .9s var(--ease) both;
 }
 
 .hero-lead{
-  font-size:1.15rem;
+  font-size:1.0rem;
   color:rgba(255,255,255,.75);
   max-width:640px;
-  margin-bottom:2.5rem;
+  margin-bottom:8rem;
   animation:fade-up .9s .2s var(--ease) both;
 }
 
@@ -497,8 +502,9 @@ ul{
 
 .about-img img{
   width:100%;
-  height:520px;
+  height:400px;
   object-fit:cover;
+  object-position: right center;
 }
 
 .floating-card{
@@ -901,78 +907,131 @@ ul{
 }
 
 
-/* Footer */
-footer{
-  background:var(--ink);
-  color:#fff;
-  padding:80px 0 32px;
+/* =========================
+   FOOTER
+========================= */
+
+/* Layout Principal do Footer */
+footer {
+  background-color: #3a1f10; 
+  color: #d1c7bd;
+  padding: 60px 0 20px;
+  font-family: inherit;
 }
 
-.footer-grid{
-  display:grid;
-  gap:48px;
-  grid-template-columns:1fr;
-  margin-bottom:64px;
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.2fr 1.5fr; 
+  gap: 40px;
+  align-items: start;
 }
 
-@media(min-width:768px){
-  .footer-grid{
-    grid-template-columns:5fr 2fr 2fr 3fr;
+.f-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Títulos das Colunas */
+.f-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  color: #e5ded6;
+  margin-bottom: 20px;
+}
+
+/* Listas e Textos */
+.f-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.f-col ul li {
+  margin-bottom: 12px;
+}
+
+.f-col a, address a {
+  color: #b5a89b;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.f-col a:hover {
+  color: #ffffff;
+}
+
+/* Coluna da Marca e Instagram */
+.f-tagline {
+  margin: 15px 0 20px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color:rgb(209, 199, 189);
+}
+
+.instagram-link i {
+  font-size: 2rem;  /* Aumente ou diminua aqui (ex: 1.2rem, 1.4rem, 1.5rem) */
+}
+
+.f-cred {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+/* Coluna de Sede e Telefones */
+.f-phones {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Rodapé Inferior (Bottom Bar) */
+.footer-bottom {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.f-legal {
+  display: flex;
+  gap: 20px;
+}
+
+/* Responsividade para Tablet e Mobile */
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px;
   }
 }
 
-.f-brand p{
-  color:rgba(255,255,255,.6);
-  max-width:340px;
-  margin:24px 0;
-}
+@media (max-width: 550px) {
+  .footer-grid {
+    grid-template-columns: 1fr; 
+  }
 
-.f-brand .logo{
-  margin-bottom:0;
-}
-
-.f-cred{
-  font-size:.7rem;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  color:rgba(255,255,255,.4);
-  margin-top:24px;
-}
-
-.f-title{
-  font-size:.7rem;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  color:rgba(255,255,255,.4);
-  margin-bottom:16px;
-}
-
-footer ul li,footer p{
-  color:rgba(255,255,255,.7);
-  font-size:.9rem;margin-bottom:10px;
-}
-
-footer a:hover{
-  color:var(--secondary);
-}
-
-.footer-bottom{
-  padding-top:32px;
-  border-top:1px solid rgba(255,255,255,.1);
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:16px;
-  font-size:.75rem;color:rgba(255,255,255,.4);
-}
-
-.f-legal{
-  display:flex;
-  gap:24px;
-}
-
-.f-legal a:hover{
-  color:#fff;
+  .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
 }
 
 /* WhatsApp + scroll progress + preloader */
