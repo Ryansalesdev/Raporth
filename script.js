@@ -101,8 +101,8 @@ const projects = [
     cat:'Projetos 3D',
     imgs:[
       'assets/fachada-r01.jpg',
-      'assets/imagem interna 01.jpg',
-      'assets/imagem interna 02.jpg'
+      'assets/imagem interna-01.jpg',
+      'assets/imagem interna-02.jpg'
     ],
    
   },
