@@ -78,9 +78,9 @@ const projects = [
     t:'Edifício Aurora 360',
     cat:'Casa de alto padrão',
     imgs:[
-      'assets/FACHADA 01.jpg',
-      'assets/fachada 02.jpg',
-      'assets/fachada 03.jpg'
+      'assets/fachada-01.jpg',
+      'assets/fachada-02.jpg',
+      'assets/fachada-03.jpg'
     ],
    
   },
@@ -89,9 +89,9 @@ const projects = [
     t:'Centro Logístico Atlas',
     cat:'Flats',
     imgs:[
-      'assets/flats01.jpeg',
-      'assets/flats02.jpeg',
-      'assets/flats03.jpeg'
+     'assets/flats01.JPEG',
+     'assets/flats02.JPEG',
+     'assets/flats03.JPEG'
     ],
    
   },
@@ -100,7 +100,7 @@ const projects = [
     t:'Sede Corporativa Iridium',
     cat:'Projetos 3D',
     imgs:[
-      'assets/fachada r01.jpg',
+      'assets/fachada-r01.jpg',
       'assets/imagem interna 01.jpg',
       'assets/imagem interna 02.jpg'
     ],
