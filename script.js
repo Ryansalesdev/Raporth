@@ -89,9 +89,9 @@ const projects = [
     t:'Centro Logístico Atlas',
     cat:'Flats',
     imgs:[
-      'assets/flats 01.jpeg',
-      'assets/flats 02.jpeg',
-      'assets/flats 03.jpeg'
+      'assets/flats01.jpeg',
+      'assets/flats02.jpeg',
+      'assets/flats03.jpeg'
     ],
    
   },
