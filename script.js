@@ -32,51 +32,211 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-/* ===== SVG icon helper ===== */
-const ic = (path) => `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+/* ===== SVG ICONS ===== */
+
+const ic = (path) => `
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden=" true"> ${path} </svg>`;
+
 const icons = {
-  building: ic('<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"/>'),
-  ruler:    ic('<path d="M21.3 8.7L8.7 21.3a1 1 0 0 1-1.4 0L2.7 16.7a1 1 0 0 1 0-1.4L15.3 2.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4z"/><path d="M7 17l-2-2M11 13l-2-2M15 9l-2-2"/>'),
-  hardhat:  ic('<path d="M2 18h20v2H2zM6 18V12a6 6 0 0 1 12 0v6M9 12V6h6v6"/>'),
-  wrench:   ic('<path d="M14.7 6.3a4 4 0 0 0 5 5l-1.4 1.4a2 2 0 0 1 0 2.8l-7.4 7.4a2 2 0 0 1-2.8 0l-3.5-3.5a2 2 0 0 1 0-2.8l7.4-7.4a2 2 0 0 1 2.8 0z"/>'),
-  clip:     ic('<rect x="6" y="4" width="12" height="18" rx="2"/><path d="M9 4V2h6v2M9 12l2 2 4-4"/>'),
-  layers:   ic('<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'),
-  clock:    ic('<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>'),
-  shield:   ic('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>'),
-  spark:    ic('<path d="M12 2l2.5 5.5L20 10l-5.5 2.5L12 18l-2.5-5.5L4 10l5.5-2.5L12 2zM5 18l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2zM19 14l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/>'),
-  chart:    ic('<path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/>'),
-  users:    ic('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>'),
-  award:    ic('<circle cx="12" cy="8" r="7"/><path d="M8.21 13.89L7 22l5-3 5 3-1.21-8.12"/>'),
-  arrowUR:  ic('<path d="M7 17L17 7M7 7h10v10"/>'),
+
+    /* 1. Construções residenciais e comerciais */
+    building: ic(`
+        <path d="M3 21h18"/>
+        <path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/>
+        <path d="M15 9h4a2 2 0 0 1 2 2v10"/>
+        <path d="M9 7h2"/>
+        <path d="M9 11h2"/>
+        <path d="M9 15h2"/>
+        <path d="M17 13h2"/>
+        <path d="M17 17h2"/>
+    `),
+
+    /* 2. Projetos arquitetônicos */
+    ruler: ic(`
+        <path d="M4 20L20 4"/>
+        <path d="M6 18l-2-2"/>
+        <path d="M9 15l-2-2"/>
+        <path d="M12 12l-2-2"/>
+        <path d="M15 9l-2-2"/>
+        <path d="M18 6l-2-2"/>
+        <path d="M4 20h4"/>
+        <path d="M20 4v4"/>
+    `),
+
+    /* 3. Gerenciamento de obras */
+    hardhat: ic(`
+        <path d="M3 18h18"/>
+        <path d="M5 18v-2a7 7 0 0 1 14 0v2"/>
+        <path d="M12 9V3"/>
+        <path d="M9 6h6"/>
+        <path d="M7 18v3"/>
+        <path d="M17 18v3"/>
+    `),
+
+    /* 4. Especialistas em flats */
+    flats: ic(`
+        <rect x="5" y="3" width="14" height="18" rx="2"/>
+        <path d="M9 7h2"/>
+        <path d="M13 7h2"/>
+        <path d="M9 11h2"/>
+        <path d="M13 11h2"/>
+        <path d="M9 15h2"/>
+        <path d="M13 15h2"/>
+        <path d="M10 21v-3h4v3"/>
+    `),
+
+    /* 5. Casas de alto padrão */
+    luxury: ic(`
+        <path d="M3 11l9-8 9 8"/>
+        <path d="M5 10v10h14V10"/>
+        <path d="M9 20v-6h6v6"/>
+        <path d="M7 12h2"/>
+        <path d="M15 12h2"/>
+        <path d="M10 7h4"/>
+    `),
+
+    /* 6. Reformas comerciais e residenciais */
+    renovation: ic(`
+        <path d="M14.7 6.3a4 4 0 0 0 5 5"/>
+        <path d="M19.7 11.3l-2.1 2.1"/>
+        <path d="M16.5 14.5L9 22H5v-4l7.5-7.5"/>
+        <path d="M12.5 10.5l3 3"/>
+        <path d="M5 6h5"/>
+        <path d="M7 4v4"/>
+    `),
+
+    /* Seta do portfólio */
+    arrowUR: ic(`
+        <path d="M7 17L17 7"/>
+        <path d="M7 7h10v10"/>
+    `)
 };
 
+
 /* ===== SERVICES ===== */
+
 const services = [
-  { i:'building', t:'Construções residenciais e comerciais', d:'Executamos obras do planejamento à entrega, com rigor técnico, gestão eficiente e atenção aos detalhes em cada etapa.' },
-  { i:'ruler',    t:'Projetos arquitetônicos ',   d:'Projetos completos e personalizados, desenvolvidos para unir funcionalidade, estética e viabilidade de execução. Gerenciamento de obras' },
-  { i:'hardhat',  t:'Gerenciamento de obras',  d:'Coordenamos cronograma, custos, equipes e qualidade, garantindo transparência e acompanhamento durante toda a obra.' },
-  { i:'wrench',   t:'Especialistas em flats',      d:'Projetamos e executamos flats e kitnets com foco em otimização de espaço, funcionalidade e valorização do investimento.' },
-  { i:'clip',     t:'Casas de alto padrão',     d:'Projetos e obras desenvolvidos com soluções personalizadas, acabamentos refinados e execução compatível com o nível de exigência de cada cliente.' },
-  { i:'layers',   t:'Reformas comerciais e residenciais',       d:'Reformas planejadas para modernizar ambientes, minimizar impactos na execução e assegurar acabamento de alto padrão.' },
+    {
+        i: 'building',
+        t: 'Construções residenciais e comerciais',
+        d: 'Executamos obras do planejamento à entrega, com rigor técnico, gestão eficiente e atenção aos detalhes em cada etapa.'
+    },
+
+    {
+        i: 'ruler',
+        t: 'Projetos arquitetônicos',
+        d: 'Projetos completos e personalizados, desenvolvidos para unir funcionalidade, estética e viabilidade de execução.'
+    },
+
+    {
+        i: 'hardhat',
+        t: 'Gerenciamento de obras',
+        d: 'Coordenamos cronograma, custos, equipes e qualidade, garantindo transparência e acompanhamento durante toda a obra.'
+    },
+
+    {
+        i: 'flats',
+        t: 'Especialistas em flats',
+        d: 'Projetamos e executamos flats e kitnets com foco em otimização de espaço, funcionalidade e valorização do investimento.'
+    },
+
+    {
+        i: 'luxury',
+        t: 'Casas de alto padrão',
+        d: 'Projetos e obras desenvolvidos com soluções personalizadas, acabamentos refinados e execução compatível com o nível de exigência de cada cliente.'
+    },
+
+    {
+        i: 'renovation',
+        t: 'Reformas comerciais e residenciais',
+        d: 'Reformas planejadas para modernizar ambientes, minimizar impactos na execução e assegurar acabamento de alto padrão.'
+    }
 ];
-document.getElementById('servicesGrid').innerHTML = services.map((s,i) => `
-  <article class="service reveal d${(i%4)+1}">
-    <div class="icon">
-      <img src="assets/logo.png" alt="Logo">
-    </div>
-    <h3>${s.t}</h3>
-    <p>${s.d}</p>
-  </article>
+
+
+document.getElementById('servicesGrid').innerHTML = services.map((s, i) => `
+    <article class="service reveal d${(i % 4) + 1}">
+
+        <div class="icon">
+            ${icons[s.i]}
+        </div>
+
+        <h3>${s.t}</h3>
+
+        <p>${s.d}</p>
+
+    </article>
 `).join('');
 
-document.querySelectorAll('#servicesGrid .reveal').forEach(el => io.observe(el));
+
+document
+    .querySelectorAll('#servicesGrid .reveal')
+    .forEach(el => io.observe(el));
+
+
+/* =========================================
+   SERVICES — 3D CARD MOTION
+========================================= */
+
+document.querySelectorAll('.service').forEach(card => {
+
+    let rect;
+
+    card.addEventListener('mouseenter', () => {
+        rect = card.getBoundingClientRect();
+    });
+
+    card.addEventListener('mousemove', (e) => {
+
+        if (!rect) {
+            rect = card.getBoundingClientRect();
+        }
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const rotateX =
+            ((y / rect.height) - 0.5) * -4;
+
+        const rotateY =
+            ((x / rect.width) - 0.5) * 4;
+
+        card.style.setProperty(
+            '--rotate-x',
+            `${rotateX}deg`
+        );
+
+        card.style.setProperty(
+            '--rotate-y',
+            `${rotateY}deg`
+        );
+
+    });
+
+    card.addEventListener('mouseleave', () => {
+
+        card.style.setProperty(
+            '--rotate-x',
+            '0deg'
+        );
+
+        card.style.setProperty(
+            '--rotate-y',
+            '0deg'
+        );
+
+        rect = null;
+
+    });
+
+});
 /* ===== PORTFOLIO ===== */
 
 
 const projects = [
   {
     t:'Edifício Aurora 360',
-    cat:'Casa de alto padrão',
+    cat:'Casas',
     imgs:[
       'assets/fachada-01.jpg',
       'assets/fachada-02.jpg',
@@ -130,7 +290,7 @@ const projects = [
 
 const cats = [
   'Todos',
-  'Casa de alto padrão',
+  'Casas',
   'Flats',
   'Projetos 3D',
   'Reforma comercial',
@@ -214,11 +374,6 @@ function renderProjects(){
         <h3>
           ${p.t}
         </h3>
-
-        <div class="project-loc">
-          ${p.loc} · ${p.year}
-        </div>
-
       </div>
 
     </button>
@@ -288,28 +443,58 @@ grid.addEventListener('click', (e) => {
 </div>
 `;
 
-  modalBackdrop.classList.add('open');
-
   const modalImg = modalBackdrop.querySelector('.modal-image');
 
-  const dots = modalBackdrop.querySelectorAll('.gallery-dot');
+const dots = modalBackdrop.querySelectorAll('.gallery-dot');
 
-  function updateImage(){
+function updateImage(){
 
-    modalImg.src = p.imgs[current];
+    modalImg.classList.remove('loaded');
 
     dots.forEach(dot => {
-      dot.classList.remove('active');
+        dot.classList.remove('active');
     });
 
     if (dots[current]) {
-      dots[current].classList.add('active');
+        dots[current].classList.add('active');
     }
-  }
 
-  const nextBtn = modalBackdrop.querySelector('.next');
+    modalImg.onload = () => {
 
-  const prevBtn = modalBackdrop.querySelector('.prev');
+        requestAnimationFrame(() => {
+            modalImg.classList.add('loaded');
+        });
+
+    };
+
+    modalImg.src = p.imgs[current];
+}
+// Só abre depois que a primeira imagem estiver carregada
+if (modalImg.complete) {
+
+    modalImg.classList.add('loaded');
+
+    requestAnimationFrame(() => {
+        modalBackdrop.classList.add('open');
+    });
+
+} else {
+
+    modalImg.onload = () => {
+
+        modalImg.classList.add('loaded');
+
+        requestAnimationFrame(() => {
+            modalBackdrop.classList.add('open');
+        });
+
+    };
+
+}
+
+const nextBtn = modalBackdrop.querySelector('.next');
+
+const prevBtn = modalBackdrop.querySelector('.prev');
 
   if (nextBtn){
 
@@ -366,15 +551,191 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
 
     modalBackdrop.classList.remove('open');
-  }
 
-  const modalImg = modalBackdrop.querySelector('.modal-image');
+    return;
+}
 
-  if (!modalImg) return;
+const modalImg = modalBackdrop.querySelector('.modal-image');
 
-  const p = projects.find(project =>
-    project.imgs.includes(modalImg.src.split('/').pop())
-  );
+if (!modalImg) return;
 
-  if (!p) return;
+const nextBtn = modalBackdrop.querySelector('.next');
+const prevBtn = modalBackdrop.querySelector('.prev');
+
+if (e.key === 'ArrowRight' && nextBtn) {
+    nextBtn.click();
+}
+
+if (e.key === 'ArrowLeft' && prevBtn) {
+    prevBtn.click();
+}
+});
+
+
+/* =========================================
+   HERO — MOUSE PARALLAX
+========================================= */
+
+const hero = document.querySelector('.hero');
+const heroBg = document.querySelector('.hero-bg');
+const heroInner = document.querySelector('.hero-inner');
+
+if (hero && heroBg && heroInner) {
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let currentX = 0;
+    let currentY = 0;
+
+    hero.addEventListener('mousemove', (e) => {
+
+        const rect = hero.getBoundingClientRect();
+
+        mouseX =
+            ((e.clientX - rect.left) / rect.width - 0.5);
+
+        mouseY =
+            ((e.clientY - rect.top) / rect.height - 0.5);
+
+    });
+
+
+    hero.addEventListener('mouseleave', () => {
+
+        mouseX = 0;
+        mouseY = 0;
+
+    });
+
+
+    function animateHero(){
+
+        currentX += (mouseX - currentX) * 0.04;
+        currentY += (mouseY - currentY) * 0.04;
+
+
+        heroBg.style.transform = `
+            scale(1.09)
+            translate3d(
+                ${currentX * -14}px,
+                ${currentY * -10}px,
+                0
+            )
+        `;
+
+
+        heroInner.style.transform = `
+            translate3d(
+                ${currentX * 5}px,
+                ${currentY * 3}px,
+                0
+            )
+        `;
+
+
+        requestAnimationFrame(animateHero);
+
+    }
+
+
+    animateHero();
+
+}
+
+/* =========================================
+   SCROLL MOTION
+========================================= */
+
+const motionElements = document.querySelectorAll(
+  '.about-img, .section-head, .portfolio-head'
+);
+
+window.addEventListener('scroll', () => {
+
+  const scrollY = window.scrollY;
+
+  motionElements.forEach(el => {
+
+    const rect = el.getBoundingClientRect();
+
+    const center =
+      rect.top + rect.height / 2;
+
+    const screenCenter =
+      window.innerHeight / 2;
+
+    const distance =
+      (center - screenCenter) * 0.03;
+
+    el.style.transform =
+      `translateY(${distance}px)`;
+
+  });
+
+}, { passive:true });
+
+
+
+
+/* =========================================
+   SERVICES — 3D CARD MOTION
+========================================= */
+
+document.querySelectorAll('.service').forEach(card => {
+
+    let rect;
+
+    card.addEventListener('mouseenter', () => {
+
+        rect = card.getBoundingClientRect();
+
+    });
+
+
+    card.addEventListener('mousemove', (e) => {
+
+        if (!rect) {
+            rect = card.getBoundingClientRect();
+        }
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const rotateX =
+            ((y / rect.height) - 0.5) * -5;
+
+        const rotateY =
+            ((x / rect.width) - 0.5) * 5;
+
+
+        card.style.setProperty(
+            '--rotate-x',
+            `${rotateX}deg`
+        );
+
+        card.style.setProperty(
+            '--rotate-y',
+            `${rotateY}deg`
+        );
+
+    });
+
+
+    card.addEventListener('mouseleave', () => {
+
+        card.style.setProperty(
+            '--rotate-x',
+            '0deg'
+        );
+
+        card.style.setProperty(
+            '--rotate-y',
+            '0deg'
+        );
+
+        rect = null;
+
+    });
+
 });
