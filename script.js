@@ -351,7 +351,7 @@ const projects = [
     t: 'Construções comerciais',
     imgs: [
         'assets/constcomercial.jpg',
-        'assets/constcomercial2.jpg',
+        'assets/constcomercial2.JPG',
         'assets/constcomercial3.jpeg'
     ]
 }
