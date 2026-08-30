@@ -1,586 +1,851 @@
 /* ============ Sentinel — vanilla JS ============ */
 
-/* Year */
-document.getElementById('year').textContent = new Date().getFullYear();
 
-/* Preloader */
+/* =========================================================
+   YEAR
+========================================================= */
+
+const yearEl = document.getElementById('year');
+
+if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+}
+
+
+/* =========================================================
+   PRELOADER
+========================================================= */
+
 window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('preloader').classList.add('done'), 700);
-});
 
-/* Navbar scroll state */
+    const preloader = document.getElementById('preloader');
+
+    if (!preloader) return;
+
+    setTimeout(() => {
+        preloader.classList.add('done');
+    }, 700);
+
+}, { once: true });
+
+
+/* =========================================================
+   NAVBAR + SCROLL PROGRESS
+========================================================= */
+
 const navbar = document.getElementById('navbar');
-const onScroll = () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 24);
-  const h = document.documentElement;
-  const total = h.scrollHeight - h.clientHeight;
-  const pct = total > 0 ? (h.scrollTop / total) * 100 : 0;
-  document.getElementById('scroll-progress').style.width = pct + '%';
-};
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
+const scrollProgress = document.getElementById('scroll-progress');
 
-/* Mobile menu */
+let scrollTicking = false;
+
+function updateScrollUI() {
+
+    const scrollY = window.scrollY;
+
+    if (navbar) {
+        navbar.classList.toggle('scrolled', scrollY > 24);
+    }
+
+    if (scrollProgress) {
+
+        const doc = document.documentElement;
+
+        const total =
+            doc.scrollHeight - doc.clientHeight;
+
+        const pct =
+            total > 0
+                ? (scrollY / total) * 100
+                : 0;
+
+        scrollProgress.style.width = `${pct}%`;
+    }
+
+    scrollTicking = false;
+}
+
+function requestScrollUpdate() {
+
+    if (!scrollTicking) {
+
+        scrollTicking = true;
+
+        requestAnimationFrame(updateScrollUI);
+    }
+}
+
+window.addEventListener(
+    'scroll',
+    requestScrollUpdate,
+    { passive: true }
+);
+
+updateScrollUI();
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
 const navToggle = document.getElementById('navToggle');
 const mobileMenu = document.getElementById('mobileMenu');
-navToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
 
-/* Reveal on scroll */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
-}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+if (navToggle && mobileMenu) {
 
-/* ===== SVG ICONS ===== */
+    navToggle.addEventListener('click', () => {
 
-const ic = (path) => `
-<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden=" true"> ${path} </svg>`;
+        mobileMenu.classList.toggle('open');
+
+    });
+
+    mobileMenu
+        .querySelectorAll('a')
+        .forEach(link => {
+
+            link.addEventListener('click', () => {
+
+                mobileMenu.classList.remove('open');
+
+            });
+
+        });
+}
+
+
+/* =========================================================
+   REVEAL ON SCROLL
+========================================================= */
+
+const io = new IntersectionObserver(
+    entries => {
+
+        entries.forEach(entry => {
+
+            if (!entry.isIntersecting) return;
+
+            entry.target.classList.add('is-visible');
+
+            io.unobserve(entry.target);
+
+        });
+
+    },
+    {
+        threshold: 0.12,
+        rootMargin: '0px 0px -60px 0px'
+    }
+);
+
+document
+    .querySelectorAll('.reveal')
+    .forEach(el => io.observe(el));
+
+
+/* =========================================================
+   SVG ICON HELPER
+========================================================= */
+
+const ic = path => `
+<svg
+    viewBox="0 0 24 24"
+    width="22"
+    height="22"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+>
+    ${path}
+</svg>
+`;
+
+
+/* =========================================================
+   ÍCONES
+========================================================= */
 
 const icons = {
 
-    /* 1. Construções residenciais e comerciais */
-    building: ic(`
-        <path d="M3 21h18"/>
-        <path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/>
-        <path d="M15 9h4a2 2 0 0 1 2 2v10"/>
-        <path d="M9 7h2"/>
-        <path d="M9 11h2"/>
-        <path d="M9 15h2"/>
-        <path d="M17 13h2"/>
-        <path d="M17 17h2"/>
+    /* CASA — Construções residenciais e comerciais */
+    house: ic(`
+        <path d="M3 10.5L12 3l9 7.5"/>
+        <path d="M5 9.5V21h14V9.5"/>
+        <path d="M9 21v-6h6v6"/>
     `),
 
-    /* 2. Projetos arquitetônicos */
-    ruler: ic(`
-        <path d="M4 20L20 4"/>
-        <path d="M6 18l-2-2"/>
-        <path d="M9 15l-2-2"/>
-        <path d="M12 12l-2-2"/>
-        <path d="M15 9l-2-2"/>
-        <path d="M18 6l-2-2"/>
-        <path d="M4 20h4"/>
-        <path d="M20 4v4"/>
-    `),
+    /* ESQUADRO — Projetos arquitetônicos */
+ruler: ic(`
+    <path d="M5 19V5h14L5 19z"/>
+    <path d="M5 15h4"/>
+    <path d="M5 11h7"/>
+    <path d="M5 7h3"/>
+`),
 
-    /* 3. Gerenciamento de obras */
+    /* CAPACETE — Gerenciamento de obras */
     hardhat: ic(`
         <path d="M3 18h18"/>
-        <path d="M5 18v-2a7 7 0 0 1 14 0v2"/>
-        <path d="M12 9V3"/>
-        <path d="M9 6h6"/>
-        <path d="M7 18v3"/>
-        <path d="M17 18v3"/>
+        <path d="M5 18v-3a7 7 0 0 1 14 0v3"/>
+        <path d="M8 15V9h8v6"/>
+        <path d="M12 9V5"/>
     `),
 
-    /* 4. Especialistas em flats */
-    flats: ic(`
-        <rect x="5" y="3" width="14" height="18" rx="2"/>
-        <path d="M9 7h2"/>
-        <path d="M13 7h2"/>
-        <path d="M9 11h2"/>
-        <path d="M13 11h2"/>
-        <path d="M9 15h2"/>
-        <path d="M13 15h2"/>
-        <path d="M10 21v-3h4v3"/>
+    /* PRÉDIO — Especialistas em flats */
+    building: ic(`
+        <path d="M5 21V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17"/>
+        <path d="M8 6h2"/>
+        <path d="M14 6h2"/>
+        <path d="M8 10h2"/>
+        <path d="M14 10h2"/>
+        <path d="M8 14h2"/>
+        <path d="M14 14h2"/>
+        <path d="M9 21v-4h6v4"/>
     `),
 
-    /* 5. Casas de alto padrão */
-    luxury: ic(`
-        <path d="M3 11l9-8 9 8"/>
-        <path d="M5 10v10h14V10"/>
-        <path d="M9 20v-6h6v6"/>
-        <path d="M7 12h2"/>
-        <path d="M15 12h2"/>
-        <path d="M10 7h4"/>
-    `),
-
-    /* 6. Reformas comerciais e residenciais */
+    /* RENOVAÇÃO */
     renovation: ic(`
-        <path d="M14.7 6.3a4 4 0 0 0 5 5"/>
-        <path d="M19.7 11.3l-2.1 2.1"/>
-        <path d="M16.5 14.5L9 22H5v-4l7.5-7.5"/>
-        <path d="M12.5 10.5l3 3"/>
-        <path d="M5 6h5"/>
-        <path d="M7 4v4"/>
+        <path d="M3 21h18"/>
+        <path d="M5 21V9l7-5 7 5v12"/>
+        <path d="M9 21v-6h6v6"/>
+        <path d="M8 9h.01M12 9h.01M16 9h.01"/>
     `),
 
-    /* Seta do portfólio */
     arrowUR: ic(`
         <path d="M7 17L17 7"/>
         <path d="M7 7h10v10"/>
     `)
 };
 
-
-/* ===== SERVICES ===== */
+/* =========================================================
+   SERVICES
+========================================================= */
 
 const services = [
+
     {
-        i: 'building',
+        id: 'construcoes',
+        i: 'house',
         t: 'Construções residenciais e comerciais',
         d: 'Executamos obras do planejamento à entrega, com rigor técnico, gestão eficiente e atenção aos detalhes em cada etapa.'
     },
 
     {
+        id: 'projetos',
         i: 'ruler',
         t: 'Projetos arquitetônicos',
         d: 'Projetos completos e personalizados, desenvolvidos para unir funcionalidade, estética e viabilidade de execução.'
     },
 
     {
+        id: 'gerenciamento',
         i: 'hardhat',
         t: 'Gerenciamento de obras',
         d: 'Coordenamos cronograma, custos, equipes e qualidade, garantindo transparência e acompanhamento durante toda a obra.'
     },
 
     {
-        i: 'flats',
+        id: 'flats',
+        i: 'building',
         t: 'Especialistas em flats',
         d: 'Projetamos e executamos flats e kitnets com foco em otimização de espaço, funcionalidade e valorização do investimento.'
     },
 
     {
-        i: 'luxury',
-        t: 'Casas de alto padrão',
-        d: 'Projetos e obras desenvolvidos com soluções personalizadas, acabamentos refinados e execução compatível com o nível de exigência de cada cliente.'
-    },
-
-    {
+        id: 'reformas',
         i: 'renovation',
         t: 'Reformas comerciais e residenciais',
         d: 'Reformas planejadas para modernizar ambientes, minimizar impactos na execução e assegurar acabamento de alto padrão.'
     }
+
 ];
 
-
-document.getElementById('servicesGrid').innerHTML = services.map((s, i) => `
-    <article class="service reveal d${(i % 4) + 1}">
-
-        <div class="icon">
-            ${icons[s.i]}
-        </div>
-
-        <h3>${s.t}</h3>
-
-        <p>${s.d}</p>
-
-    </article>
-`).join('');
+const servicesGrid =
+    document.getElementById('servicesGrid');
 
 
-document
-    .querySelectorAll('#servicesGrid .reveal')
-    .forEach(el => io.observe(el));
+if (servicesGrid) {
+
+    servicesGrid.innerHTML = services
+        .map((s, i) => `
+
+            <article
+                class="service reveal d${(i % 4) + 1}"
+                id="servico-${s.id}"
+            >
+
+                <div class="icon">
+                    ${icons[s.i]}
+                </div>
+
+                <h3>${s.t}</h3>
+
+                <p>${s.d}</p>
+
+            </article>
+
+        `)
+        .join('');
 
 
-/* =========================================
-   SERVICES — 3D CARD MOTION
-========================================= */
+    servicesGrid
+        .querySelectorAll('.reveal')
+        .forEach(el => io.observe(el));
 
-document.querySelectorAll('.service').forEach(card => {
+}
 
-    let rect;
-
-    card.addEventListener('mouseenter', () => {
-        rect = card.getBoundingClientRect();
-    });
-
-    card.addEventListener('mousemove', (e) => {
-
-        if (!rect) {
-            rect = card.getBoundingClientRect();
-        }
-
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const rotateX =
-            ((y / rect.height) - 0.5) * -4;
-
-        const rotateY =
-            ((x / rect.width) - 0.5) * 4;
-
-        card.style.setProperty(
-            '--rotate-x',
-            `${rotateX}deg`
-        );
-
-        card.style.setProperty(
-            '--rotate-y',
-            `${rotateY}deg`
-        );
-
-    });
-
-    card.addEventListener('mouseleave', () => {
-
-        card.style.setProperty(
-            '--rotate-x',
-            '0deg'
-        );
-
-        card.style.setProperty(
-            '--rotate-y',
-            '0deg'
-        );
-
-        rect = null;
-
-    });
-
-});
-/* ===== PORTFOLIO ===== */
+/* =========================================================
+   PORTFOLIO
+========================================================= */
 
 
 const projects = [
-  {
-    t:'Edifício Aurora 360',
-    cat:'Casas',
-    imgs:[
-      'assets/fachada-01.jpg',
-      'assets/fachada-02.jpg',
-      'assets/fachada-03.jpg'
-    ],
-   
-  },
 
-  {
-    t:'Centro Logístico Atlas',
-    cat:'Flats',
-    imgs:[
-     'assets/flats01.JPEG',
-     'assets/flats02.JPEG',
-     'assets/flats03.JPEG'
-    ],
-   
-  },
+    {
+        t: 'Construções residenciais',
+        imgs: [
+            'assets/fachada-01.jpg',
+            'assets/fachada-02.jpg',
+            'assets/fachada-03.jpg'
+        ]
+    },
 
-  {
-    t:'Sede Corporativa Iridium',
-    cat:'Projetos 3D',
-    imgs:[
-      'assets/fachada-r01.jpg',
-      'assets/imagem interna-01.jpg',
-      'assets/imagem interna-02.jpg'
-    ],
-   
-  },
+    {
+        t: 'Flats',
+        imgs: [
+            'assets/flats01.JPEG',
+            'assets/flats02.JPEG',
+            'assets/flats03.JPEG'
+        ]
+    },
 
-  {
-    t:'Viaduto Serra Azul',
-    cat:'Reforma comercial',
-    imgs:[
-      'assets/reforma 01.jpg',
-      'assets/reforma 02.jpg',
-      'assets/reforma 03.jpg'
-    ],
-  },
+    {
+        t: 'Projetos 3D',
+        imgs: [
+            'assets/fachada-r01.jpg',
+            'assets/imagem interna-01.jpg',
+            'assets/imagem interna-02.jpg'
+        ]
+    },
 
-  {
-    t:'Shopping Praça Central',
-    cat:'Reforma residencial',
-    imgs:[
-      'assets/residencial 01.jpg',
-      'assets/residencial 02.jpg',
-      'assets/residencial 03.jpg'
-    ],
-  },
+    {
+        t: 'Reforma comercial',
+        imgs: [
+            'assets/reforma 01.jpg',
+            'assets/reforma 02.jpg',
+            'assets/reforma 03.jpg'
+        ]
+    },
+
+    {
+        t: 'Reforma residencial',
+     
+        imgs: [
+            'assets/residencial 01.jpg',
+            'assets/residencial 02.jpg',
+            'assets/residencial 03.jpg'
+        ]
+    },
+
+    {
+    t: 'Construções comerciais',
+    imgs: [
+        'assets/constcomercial.jpg',
+        'assets/constcomercial2.jpg',
+        'assets/constcomercial3.jpeg'
+    ]
+}
+
 ];
+
 
 const cats = [
-  'Todos',
-  'Casas',
-  'Flats',
-  'Projetos 3D',
-  'Reforma comercial',
-  'Reforma residencial',
+    'Todos',
+    'Construções residenciais',
+    'Construções comerciais',
+    'Flats',
+    'Projetos 3D',
+    'Reforma comercial',
+    'Reforma residencial'
+    
 ];
+
 
 let activeCat = 'Todos';
 
-const filtersEl = document.getElementById('portfolioFilters');
+const filtersEl =
+    document.getElementById('portfolioFilters');
 
-filtersEl.innerHTML = cats.map(c => `
-  <button
-    class="filter ${c===activeCat?'active':''}"
-    data-cat="${c}"
-  >
-    ${c}
-  </button>
-`).join('');
+const grid =
+    document.getElementById('portfolioGrid');
 
-filtersEl.addEventListener('click', (e) => {
 
-  const b = e.target.closest('.filter');
+/* FILTERS */
 
-  if (!b) return;
+if (filtersEl) {
 
-  activeCat = b.dataset.cat;
+    filtersEl.innerHTML = cats
+        .map(cat => `
 
-  filtersEl
-    .querySelectorAll('.filter')
-    .forEach(f => {
-      f.classList.toggle(
-        'active',
-        f.dataset.cat === activeCat
-      );
+            <button
+                class="filter ${cat === activeCat ? 'active' : ''}"
+                data-cat="${cat}"
+            >
+                ${cat}
+            </button>
+
+        `)
+        .join('');
+
+
+    filtersEl.addEventListener('click', event => {
+
+        const button =
+            event.target.closest('.filter');
+
+        if (!button) return;
+
+        activeCat =
+            button.dataset.cat;
+
+        filtersEl
+            .querySelectorAll('.filter')
+            .forEach(filter => {
+
+                filter.classList.toggle(
+                    'active',
+                    filter.dataset.cat === activeCat
+                );
+
+            });
+
+        renderProjects();
+
     });
 
-  renderProjects();
-});
-
-const grid = document.getElementById('portfolioGrid');
-
-function renderProjects(){
-
-  const list = activeCat === 'Todos'
-    ? projects
-    : projects.filter(p => p.cat === activeCat);
-
-  grid.innerHTML = list.map((p,i) => `
-
-    <button
-      class="project reveal d${(i%4)+1}"
-      data-idx="${projects.indexOf(p)}"
-    >
-
-      <img
-        src="${p.imgs[0]}"
-        alt="${p.t}"
-        loading="lazy"
-      />
-
-      ${
-        p.imgs.length > 1
-        ? `
-          <div class="project-count">
-            +${p.imgs.length - 1}
-          </div>
-        `
-        : ''
-      }
-
-      <div class="project-arrow">
-        ${icons.arrowUR}
-      </div>
-
-      <div class="project-content">
-
-        <div class="project-cat">
-          ${p.cat}
-        </div>
-
-        <h3>
-          ${p.t}
-        </h3>
-      </div>
-
-    </button>
-
-  `).join('');
-
-  grid
-    .querySelectorAll('.reveal')
-    .forEach(el => io.observe(el));
 }
+
+
+/* =========================================================
+   RENDER PROJECTS
+========================================================= */
+
+function renderProjects() {
+
+    if (!grid) return;
+
+    const list =
+        activeCat === 'Todos'
+            ? projects
+            : projects.filter(
+                project => project.t === activeCat
+            );
+
+
+    grid.innerHTML = list
+        .map((project, index) => `
+
+            <button
+                class="project reveal d${(index % 4) + 1}"
+                data-idx="${projects.indexOf(project)}"
+            >
+
+                <img
+                    src="${project.imgs[0]}"
+                    alt="${project.t}"
+                    loading="lazy"
+                    decoding="async"
+                />
+
+                ${
+                    project.imgs.length > 1
+                        ? `
+                            <div class="project-count">
+                                +${project.imgs.length - 1}
+                            </div>
+                        `
+                        : ''
+                }
+
+                <div class="project-arrow">
+                    ${icons.arrowUR}
+                </div>
+
+                <div class="project-content">
+
+                    <h3>
+                        ${project.t}
+                    </h3>
+
+                </div>
+
+            </button>
+
+        `)
+        .join('');
+
+
+    grid
+        .querySelectorAll('.reveal')
+        .forEach(el => io.observe(el));
+
+}
+
 
 renderProjects();
 
-/* ===== MODAL ===== */
 
-const modalBackdrop = document.createElement('div');
+/* =========================================================
+   MODAL
+========================================================= */
 
-modalBackdrop.className = 'modal-backdrop';
+const modalBackdrop =
+    document.createElement('div');
 
-document.body.appendChild(modalBackdrop);
+modalBackdrop.className =
+    'modal-backdrop';
 
-grid.addEventListener('click', (e) => {
+document.body.appendChild(
+    modalBackdrop
+);
 
-  const b = e.target.closest('.project');
 
-  if (!b) return;
+if (grid) {
 
-  const p = projects[+b.dataset.idx];
+    grid.addEventListener('click', event => {
 
-  let current = 0;
+        const button =
+            event.target.closest('.project');
 
- modalBackdrop.innerHTML = `
-<div class="modal image-only" onclick="event.stopPropagation()">
+        if (!button) return;
 
-  <button class="modal-close" aria-label="Fechar">
-    ✕
-  </button>
+        const project =
+            projects[+button.dataset.idx];
 
-  <div class="modal-gallery">
+        let current = 0;
 
-    <img
-      class="modal-image"
-      src="${p.imgs[0]}"
-      alt="${p.t}"
-    />
 
-    ${
-      p.imgs.length > 1
-      ? `
-        <button class="gallery-btn prev">‹</button>
-        <button class="gallery-btn next">›</button>
-      `
-      : ''
-    }
+        modalBackdrop.innerHTML = `
 
-    <div class="gallery-dots">
-      ${p.imgs.map((_, index) => `
-        <span
-          class="gallery-dot ${index === 0 ? 'active' : ''}"
-          data-index="${index}"
-        ></span>
-      `).join('')}
-    </div>
+            <div
+                class="modal image-only"
+                onclick="event.stopPropagation()"
+            >
 
-  </div>
+                <button
+                    class="modal-close"
+                    aria-label="Fechar"
+                >
+                    ✕
+                </button>
 
-</div>
-`;
 
-  const modalImg = modalBackdrop.querySelector('.modal-image');
+                <div class="modal-gallery">
 
-const dots = modalBackdrop.querySelectorAll('.gallery-dot');
+                    <img
+                        class="modal-image"
+                        src="${project.imgs[0]}"
+                        alt="${project.t}"
+                    />
 
-function updateImage(){
 
-    modalImg.classList.remove('loaded');
+                    ${
+                        project.imgs.length > 1
+                            ? `
+                                <button class="gallery-btn prev">
+                                    ‹
+                                </button>
 
-    dots.forEach(dot => {
-        dot.classList.remove('active');
-    });
+                                <button class="gallery-btn next">
+                                    ›
+                                </button>
+                            `
+                            : ''
+                    }
 
-    if (dots[current]) {
-        dots[current].classList.add('active');
-    }
 
-    modalImg.onload = () => {
+                    <div class="gallery-dots">
 
-        requestAnimationFrame(() => {
+                        ${project.imgs
+                            .map(
+                                (_, index) => `
+                                    <span
+                                        class="gallery-dot ${
+                                            index === 0
+                                                ? 'active'
+                                                : ''
+                                        }"
+                                        data-index="${index}"
+                                    ></span>
+                                `
+                            )
+                            .join('')}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        const modalImg =
+            modalBackdrop.querySelector('.modal-image');
+
+        const dots =
+            modalBackdrop.querySelectorAll('.gallery-dot');
+
+
+        function updateImage() {
+
+            if (!modalImg) return;
+
+
+            modalImg.classList.remove('loaded');
+
+
+            dots.forEach(dot => {
+
+                dot.classList.remove('active');
+
+            });
+
+
+            if (dots[current]) {
+
+                dots[current]
+                    .classList.add('active');
+
+            }
+
+
+            const newImage =
+                new Image();
+
+
+            newImage.onload = () => {
+
+                modalImg.src =
+                    newImage.src;
+
+                requestAnimationFrame(() => {
+
+                    modalImg.classList.add('loaded');
+
+                });
+
+            };
+
+
+            newImage.src =
+                project.imgs[current];
+
+        }
+
+
+        /* FIRST IMAGE */
+
+        if (modalImg.complete) {
+
             modalImg.classList.add('loaded');
+
+            requestAnimationFrame(() => {
+
+                modalBackdrop.classList.add('open');
+
+            });
+
+        } else {
+
+            modalImg.onload = () => {
+
+                modalImg.classList.add('loaded');
+
+                requestAnimationFrame(() => {
+
+                    modalBackdrop.classList.add('open');
+
+                });
+
+            };
+
+        }
+
+
+        /* NEXT */
+
+        const nextBtn =
+            modalBackdrop.querySelector('.next');
+
+
+        if (nextBtn) {
+
+            nextBtn.onclick = () => {
+
+                current =
+                    (current + 1) %
+                    project.imgs.length;
+
+                updateImage();
+
+            };
+
+        }
+
+
+        /* PREVIOUS */
+
+        const prevBtn =
+            modalBackdrop.querySelector('.prev');
+
+
+        if (prevBtn) {
+
+            prevBtn.onclick = () => {
+
+                current =
+                    (
+                        current -
+                        1 +
+                        project.imgs.length
+                    ) %
+                    project.imgs.length;
+
+                updateImage();
+
+            };
+
+        }
+
+
+        /* DOTS */
+
+        dots.forEach(dot => {
+
+            dot.onclick = () => {
+
+                current =
+                    +dot.dataset.index;
+
+                updateImage();
+
+            };
+
         });
 
-    };
 
-    modalImg.src = p.imgs[current];
-}
-// Só abre depois que a primeira imagem estiver carregada
-if (modalImg.complete) {
+        /* CLOSE */
 
-    modalImg.classList.add('loaded');
+        const closeBtn =
+            modalBackdrop.querySelector('.modal-close');
 
-    requestAnimationFrame(() => {
-        modalBackdrop.classList.add('open');
+
+        if (closeBtn) {
+
+            closeBtn.onclick = () => {
+
+                modalBackdrop.classList.remove('open');
+
+            };
+
+        }
+
     });
 
-} else {
-
-    modalImg.onload = () => {
-
-        modalImg.classList.add('loaded');
-
-        requestAnimationFrame(() => {
-            modalBackdrop.classList.add('open');
-        });
-
-    };
-
 }
 
-const nextBtn = modalBackdrop.querySelector('.next');
 
-const prevBtn = modalBackdrop.querySelector('.prev');
+/* CLICK OUTSIDE MODAL */
 
-  if (nextBtn){
+modalBackdrop.addEventListener(
+    'click',
+    event => {
 
-    nextBtn.onclick = () => {
+        if (event.target === modalBackdrop) {
 
-      current = (current + 1) % p.imgs.length;
+            modalBackdrop.classList.remove('open');
 
-      updateImage();
-    };
-  }
+        }
 
-  if (prevBtn){
-
-    prevBtn.onclick = () => {
-
-      current = (
-        current - 1 + p.imgs.length
-      ) % p.imgs.length;
-
-      updateImage();
-    };
-  }
-
-  dots.forEach(dot => {
-
-    dot.onclick = () => {
-
-      current = +dot.dataset.index;
-
-      updateImage();
-    };
-  });
-
-  modalBackdrop
-    .querySelector('.modal-close')
-    .onclick = () => {
-
-      modalBackdrop.classList.remove('open');
-    };
-});
-
-modalBackdrop.addEventListener('click', (e) => {
-
-  if (e.target === modalBackdrop){
-
-    modalBackdrop.classList.remove('open');
-  }
-});
-
-document.addEventListener('keydown', (e) => {
-
-  if (!modalBackdrop.classList.contains('open')) return;
-
-  if (e.key === 'Escape') {
-
-    modalBackdrop.classList.remove('open');
-
-    return;
-}
-
-const modalImg = modalBackdrop.querySelector('.modal-image');
-
-if (!modalImg) return;
-
-const nextBtn = modalBackdrop.querySelector('.next');
-const prevBtn = modalBackdrop.querySelector('.prev');
-
-if (e.key === 'ArrowRight' && nextBtn) {
-    nextBtn.click();
-}
-
-if (e.key === 'ArrowLeft' && prevBtn) {
-    prevBtn.click();
-}
-});
+    }
+);
 
 
-/* =========================================
-   HERO — MOUSE PARALLAX
-========================================= */
+/* =========================================================
+   KEYBOARD MODAL
+========================================================= */
 
-const hero = document.querySelector('.hero');
-const heroBg = document.querySelector('.hero-bg');
-const heroInner = document.querySelector('.hero-inner');
+document.addEventListener(
+    'keydown',
+    event => {
 
-if (hero && heroBg && heroInner) {
+        if (
+            !modalBackdrop.classList.contains('open')
+        ) {
+            return;
+        }
+
+
+        if (event.key === 'Escape') {
+
+            modalBackdrop.classList.remove('open');
+
+            return;
+
+        }
+
+
+        const nextBtn =
+            modalBackdrop.querySelector('.next');
+
+        const prevBtn =
+            modalBackdrop.querySelector('.prev');
+
+
+        if (
+            event.key === 'ArrowRight' &&
+            nextBtn
+        ) {
+
+            nextBtn.click();
+
+        }
+
+
+        if (
+            event.key === 'ArrowLeft' &&
+            prevBtn
+        ) {
+
+            prevBtn.click();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   HERO — OPTIMIZED MOUSE PARALLAX
+========================================================= */
+
+const hero =
+    document.querySelector('.hero');
+
+const heroBg =
+    document.querySelector('.hero-bg');
+
+const heroInner =
+    document.querySelector('.hero-inner');
+
+
+if (
+    hero &&
+    heroBg &&
+    heroInner &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+) {
 
     let mouseX = 0;
     let mouseY = 0;
@@ -588,40 +853,80 @@ if (hero && heroBg && heroInner) {
     let currentX = 0;
     let currentY = 0;
 
-    hero.addEventListener('mousemove', (e) => {
-
-        const rect = hero.getBoundingClientRect();
-
-        mouseX =
-            ((e.clientX - rect.left) / rect.width - 0.5);
-
-        mouseY =
-            ((e.clientY - rect.top) / rect.height - 0.5);
-
-    });
+    let heroAnimating = false;
 
 
-    hero.addEventListener('mouseleave', () => {
+    hero.addEventListener(
+        'mousemove',
+        event => {
 
-        mouseX = 0;
-        mouseY = 0;
+            const rect =
+                hero.getBoundingClientRect();
 
-    });
+            mouseX =
+                (event.clientX - rect.left) /
+                rect.width -
+                0.5;
+
+            mouseY =
+                (event.clientY - rect.top) /
+                rect.height -
+                0.5;
 
 
-    function animateHero(){
+            if (!heroAnimating) {
 
-        currentX += (mouseX - currentX) * 0.04;
-        currentY += (mouseY - currentY) * 0.04;
+                heroAnimating = true;
+
+                requestAnimationFrame(
+                    animateHero
+                );
+
+            }
+
+        },
+        { passive: true }
+    );
+
+
+    hero.addEventListener(
+        'mouseleave',
+        () => {
+
+            mouseX = 0;
+            mouseY = 0;
+
+            if (!heroAnimating) {
+
+                heroAnimating = true;
+
+                requestAnimationFrame(
+                    animateHero
+                );
+
+            }
+
+        },
+        { passive: true }
+    );
+
+
+    function animateHero() {
+
+        currentX +=
+            (mouseX - currentX) * 0.08;
+
+        currentY +=
+            (mouseY - currentY) * 0.08;
 
 
         heroBg.style.transform = `
-            scale(1.09)
             translate3d(
                 ${currentX * -14}px,
                 ${currentY * -10}px,
                 0
             )
+            scale(1.09)
         `;
 
 
@@ -634,108 +939,268 @@ if (hero && heroBg && heroInner) {
         `;
 
 
-        requestAnimationFrame(animateHero);
+        const stillMoving =
+            Math.abs(mouseX - currentX) > 0.001 ||
+            Math.abs(mouseY - currentY) > 0.001;
+
+
+        if (stillMoving) {
+
+            requestAnimationFrame(
+                animateHero
+            );
+
+        } else {
+
+            heroAnimating = false;
+
+        }
 
     }
 
+}
 
-    animateHero();
+
+/* =========================================================
+   SCROLL MOTION — OPTIMIZED
+========================================================= */
+
+const motionElements =
+    document.querySelectorAll(
+        '.about-img, .section-head, .portfolio-head'
+    );
+
+
+let motionTicking = false;
+
+
+function updateMotionElements() {
+
+    const screenCenter =
+        window.innerHeight / 2;
+
+
+    motionElements.forEach(el => {
+
+        const rect =
+            el.getBoundingClientRect();
+
+
+        const center =
+            rect.top +
+            rect.height / 2;
+
+
+        const distance =
+            (center - screenCenter) * 0.03;
+
+
+        el.style.transform =
+            `translate3d(0, ${distance}px, 0)`;
+
+    });
+
+
+    motionTicking = false;
 
 }
 
-/* =========================================
-   SCROLL MOTION
-========================================= */
 
-const motionElements = document.querySelectorAll(
-  '.about-img, .section-head, .portfolio-head'
-);
+window.addEventListener(
+    'scroll',
+    () => {
 
-window.addEventListener('scroll', () => {
+        if (!motionTicking) {
 
-  const scrollY = window.scrollY;
+            motionTicking = true;
 
-  motionElements.forEach(el => {
+            requestAnimationFrame(
+                updateMotionElements
+            );
 
-    const rect = el.getBoundingClientRect();
-
-    const center =
-      rect.top + rect.height / 2;
-
-    const screenCenter =
-      window.innerHeight / 2;
-
-    const distance =
-      (center - screenCenter) * 0.03;
-
-    el.style.transform =
-      `translateY(${distance}px)`;
-
-  });
-
-}, { passive:true });
-
-
-
-
-/* =========================================
-   SERVICES — 3D CARD MOTION
-========================================= */
-
-document.querySelectorAll('.service').forEach(card => {
-
-    let rect;
-
-    card.addEventListener('mouseenter', () => {
-
-        rect = card.getBoundingClientRect();
-
-    });
-
-
-    card.addEventListener('mousemove', (e) => {
-
-        if (!rect) {
-            rect = card.getBoundingClientRect();
         }
 
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const rotateX =
-            ((y / rect.height) - 0.5) * -5;
-
-        const rotateY =
-            ((x / rect.width) - 0.5) * 5;
+    },
+    { passive: true }
+);
 
 
-        card.style.setProperty(
-            '--rotate-x',
-            `${rotateX}deg`
+/* =========================================================
+   SERVICES — OPTIMIZED 3D CARDS
+========================================================= */
+
+const serviceCards =
+    document.querySelectorAll('.service');
+
+
+const reducedMotion =
+    window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+
+if (!reducedMotion) {
+
+    serviceCards.forEach(card => {
+
+        let rect = null;
+        let cardFrame = null;
+
+        let targetX = 0;
+        let targetY = 0;
+
+        let currentX = 0;
+        let currentY = 0;
+
+
+        card.addEventListener(
+            'mouseenter',
+            () => {
+
+                rect =
+                    card.getBoundingClientRect();
+
+            },
+            { passive: true }
         );
 
-        card.style.setProperty(
-            '--rotate-y',
-            `${rotateY}deg`
+
+        card.addEventListener(
+            'mousemove',
+            event => {
+
+                if (!rect) {
+
+                    rect =
+                        card.getBoundingClientRect();
+
+                }
+
+
+                targetX =
+                    (
+                        (event.clientY - rect.top) /
+                        rect.height -
+                        0.5
+                    ) * -5;
+
+
+                targetY =
+                    (
+                        (event.clientX - rect.left) /
+                        rect.width -
+                        0.5
+                    ) * 5;
+
+
+                if (!cardFrame) {
+
+                    cardFrame =
+                        requestAnimationFrame(
+                            animateCard
+                        );
+
+                }
+
+            },
+            { passive: true }
+        );
+
+
+        function animateCard() {
+
+            currentX +=
+                (targetX - currentX) * 0.18;
+
+            currentY +=
+                (targetY - currentY) * 0.18;
+
+
+            card.style.setProperty(
+                '--rotate-x',
+                `${currentX}deg`
+            );
+
+            card.style.setProperty(
+                '--rotate-y',
+                `${currentY}deg`
+            );
+
+
+            const stillMoving =
+                Math.abs(targetX - currentX) > 0.01 ||
+                Math.abs(targetY - currentY) > 0.01;
+
+
+            if (stillMoving) {
+
+                cardFrame =
+                    requestAnimationFrame(
+                        animateCard
+                    );
+
+            } else {
+
+                cardFrame = null;
+
+            }
+
+        }
+
+
+        card.addEventListener(
+            'mouseleave',
+            () => {
+
+                targetX = 0;
+                targetY = 0;
+
+                rect = null;
+
+
+                if (!cardFrame) {
+
+                    cardFrame =
+                        requestAnimationFrame(
+                            animateCard
+                        );
+
+                }
+
+            },
+            { passive: true }
         );
 
     });
 
+}
 
-    card.addEventListener('mouseleave', () => {
 
-        card.style.setProperty(
-            '--rotate-x',
-            '0deg'
-        );
+/* =========================================================
+   INITIAL MOTION UPDATE
+========================================================= */
 
-        card.style.setProperty(
-            '--rotate-y',
-            '0deg'
-        );
+if (motionElements.length) {
 
-        rect = null;
+    requestAnimationFrame(
+        updateMotionElements
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE PERFORMANCE
+========================================================= */
+
+document
+    .querySelectorAll('img')
+    .forEach(img => {
+
+        if (!img.hasAttribute('decoding')) {
+
+            img.decoding = 'async';
+
+        }
 
     });
-
-});
