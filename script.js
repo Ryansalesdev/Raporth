@@ -1,5 +1,3 @@
-/* ============ Sentinel — vanilla JS ============ */
-
 
 /* =========================================================
    YEAR
@@ -142,7 +140,7 @@ document
 
 
 /* =========================================================
-   SVG ICON HELPER
+   SVG ICON 
 ========================================================= */
 
 const ic = path => `
@@ -183,13 +181,14 @@ ruler: ic(`
     <path d="M5 7h3"/>
 `),
 
-    /* CAPACETE — Gerenciamento de obras */
-    hardhat: ic(`
-        <path d="M3 18h18"/>
-        <path d="M5 18v-3a7 7 0 0 1 14 0v3"/>
-        <path d="M8 15V9h8v6"/>
-        <path d="M12 9V5"/>
-    `),
+   hardhat: ic(`
+    <path d="M3 17.5h18"/>
+    <path d="M5 17.5v-3a7 7 0 0 1 14 0v3"/>
+    <path d="M3 17.5c0 1 1 1.5 2 1.5h14c1 0 2-.5 2-1.5"/>
+    <path d="M8.5 14.5v-2"/>
+    <path d="M12 13v-3"/>
+    <path d="M15.5 14.5v-2"/>
+`),
 
     /* PRÉDIO — Especialistas em flats */
     building: ic(`
@@ -218,42 +217,42 @@ ruler: ic(`
 };
 
 /* =========================================================
-   SERVICES
+    CARD DE SERVIÇOS 
 ========================================================= */
 
 const services = [
 
     {
         id: 'construcoes',
-        i: 'house',
+        icon: 'assets/casinha2.png',
         t: 'Construções residenciais e comerciais',
         d: 'Executamos obras do planejamento à entrega, com rigor técnico, gestão eficiente e atenção aos detalhes em cada etapa.'
     },
 
     {
         id: 'projetos',
-        i: 'ruler',
+        icon: 'assets/esquadro2.png',
         t: 'Projetos arquitetônicos',
         d: 'Projetos completos e personalizados, desenvolvidos para unir funcionalidade, estética e viabilidade de execução.'
     },
 
     {
         id: 'gerenciamento',
-        i: 'hardhat',
+        icon: 'assets/log-obra.png',
         t: 'Gerenciamento de obras',
         d: 'Coordenamos cronograma, custos, equipes e qualidade, garantindo transparência e acompanhamento durante toda a obra.'
     },
 
     {
         id: 'flats',
-        i: 'building',
+        icon: 'assets/log-flats.png',
         t: 'Especialistas em flats',
         d: 'Projetamos e executamos flats e kitnets com foco em otimização de espaço, funcionalidade e valorização do investimento.'
     },
 
     {
         id: 'reformas',
-        i: 'renovation',
+        icon: 'assets/teste33.png',
         t: 'Reformas comerciais e residenciais',
         d: 'Reformas planejadas para modernizar ambientes, minimizar impactos na execução e assegurar acabamento de alto padrão.'
     }
@@ -274,10 +273,12 @@ if (servicesGrid) {
                 id="servico-${s.id}"
             >
 
-                <div class="icon">
-                    ${icons[s.i]}
-                </div>
-
+               <div class="icon">
+                ${s.icon
+                 ? `<img src="${s.icon}" alt="">`
+                 : icons[s.i]
+                }
+            </div>  
                 <h3>${s.t}</h3>
 
                 <p>${s.d}</p>
@@ -309,8 +310,20 @@ const projects = [
             'assets/fachada-03.jpg'
         ]
     },
+       {
+    t: 'Construções comerciais',
+    imgs: [
+        'assets/constcomercial.jpg',
+        'assets/constcomercial2.JPG',
+        'assets/constcomercial3.jpeg'
+    ]
+},
+
 
     {
+
+        
+        
         t: 'Flats',
         imgs: [
             'assets/flats01.JPEG',
@@ -318,6 +331,27 @@ const projects = [
             'assets/flats03.JPEG'
         ]
     },
+
+     {
+        t: 'Reforma comerciais',
+        imgs: [
+            'assets/reforma 01.jpg',
+            'assets/reforma 02.jpg',
+            'assets/reforma 03.jpg'
+        ]
+    },
+
+     {
+        t: 'Reforma residenciais',
+     
+        imgs: [
+            'assets/residencial 01.jpg',
+            'assets/residencial 02.jpg',
+            'assets/residencial 03.jpg'
+        ]
+    },
+
+
 
     {
         t: 'Projetos 3D',
@@ -328,34 +362,8 @@ const projects = [
         ]
     },
 
-    {
-        t: 'Reforma comercial',
-        imgs: [
-            'assets/reforma 01.jpg',
-            'assets/reforma 02.jpg',
-            'assets/reforma 03.jpg'
-        ]
-    },
 
-    {
-        t: 'Reforma residencial',
-     
-        imgs: [
-            'assets/residencial 01.jpg',
-            'assets/residencial 02.jpg',
-            'assets/residencial 03.jpg'
-        ]
-    },
-
-    {
-    t: 'Construções comerciais',
-    imgs: [
-        'assets/constcomercial.jpg',
-        'assets/constcomercial2.JPG',
-        'assets/constcomercial3.jpeg'
-    ]
-}
-
+  
 ];
 
 
@@ -365,8 +373,8 @@ const cats = [
     'Construções comerciais',
     'Flats',
     'Projetos 3D',
-    'Reforma comercial',
-    'Reforma residencial'
+    'Reforma comerciais',
+    'Reforma residenciais'
     
 ];
 

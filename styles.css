@@ -118,7 +118,7 @@ ul{
 }
 
 
-/* Typography */
+/* Tipografia */
 .display{
   font-family:Arial, Helvetica, sans-serif;
   font-weight:700;
@@ -136,6 +136,12 @@ ul{
   font-weight:500;
   color:rgba(255, 255, 255, 0.85);
 }
+
+/* FRASE DO HERO EM CAIXA ALTA */ 
+.display .title-main {
+    font-size: 0.80em;
+}
+
 .hero h1.display i{
     display:inline-block;
 
