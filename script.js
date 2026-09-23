@@ -316,9 +316,9 @@ const projects = [
         'assets/constcomercial.jpg',
         'assets/constcomercial2.JPG',
         'assets/constcomercial3.jpeg',
-        'assets/constcomercial4.jpg',
+        'assets/constcomercial4.JPG',
         'assets/constcomercial5.JPG',
-        'assets/constcomercial6.jpg'
+        'assets/constcomercial6.JPG'
     ]
 },
 
