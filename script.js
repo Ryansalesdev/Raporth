@@ -232,7 +232,7 @@ const services = [
     {
         id: 'projetos',
         icon: 'assets/esquadro2.png',
-        t: 'Projetos arquitetônicos',
+        t: 'Projetos',
         d: 'Projetos completos e personalizados, desenvolvidos para unir funcionalidade, estética e viabilidade de execução.'
     },
 
@@ -313,10 +313,10 @@ const projects = [
        {
     t: 'Construções comerciais',
     imgs: [
-        'assets/constcomercial.jpg',
+        'assets/constcomercial4.JPG',
         'assets/constcomercial2.JPG',
         'assets/constcomercial3.jpeg',
-        'assets/constcomercial4.JPG',
+        'assets/constcomercial.jpg',
         'assets/constcomercial5.JPG',
         'assets/constcomercial6.JPG'
     ]
@@ -357,7 +357,7 @@ const projects = [
 
 
     {
-        t: 'Projetos 3D',
+        t: 'Projetos ',
         imgs: [
             'assets/fachada-r01.jpg',
             'assets/imagem interna-01.jpg',
@@ -837,139 +837,7 @@ document.addEventListener(
 );
 
 
-/* =========================================================
-   HERO — OPTIMIZED MOUSE PARALLAX
-========================================================= */
 
-const hero =
-    document.querySelector('.hero');
-
-const heroBg =
-    document.querySelector('.hero-bg');
-
-const heroInner =
-    document.querySelector('.hero-inner');
-
-
-if (
-    hero &&
-    heroBg &&
-    heroInner &&
-    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-) {
-
-    let mouseX = 0;
-    let mouseY = 0;
-
-    let currentX = 0;
-    let currentY = 0;
-
-    let heroAnimating = false;
-
-
-    hero.addEventListener(
-        'mousemove',
-        event => {
-
-            const rect =
-                hero.getBoundingClientRect();
-
-            mouseX =
-                (event.clientX - rect.left) /
-                rect.width -
-                0.5;
-
-            mouseY =
-                (event.clientY - rect.top) /
-                rect.height -
-                0.5;
-
-
-            if (!heroAnimating) {
-
-                heroAnimating = true;
-
-                requestAnimationFrame(
-                    animateHero
-                );
-
-            }
-
-        },
-        { passive: true }
-    );
-
-
-    hero.addEventListener(
-        'mouseleave',
-        () => {
-
-            mouseX = 0;
-            mouseY = 0;
-
-            if (!heroAnimating) {
-
-                heroAnimating = true;
-
-                requestAnimationFrame(
-                    animateHero
-                );
-
-            }
-
-        },
-        { passive: true }
-    );
-
-
-    function animateHero() {
-
-        currentX +=
-            (mouseX - currentX) * 0.08;
-
-        currentY +=
-            (mouseY - currentY) * 0.08;
-
-
-        heroBg.style.transform = `
-            translate3d(
-                ${currentX * -14}px,
-                ${currentY * -10}px,
-                0
-            )
-            scale(1.09)
-        `;
-
-
-        heroInner.style.transform = `
-            translate3d(
-                ${currentX * 5}px,
-                ${currentY * 3}px,
-                0
-            )
-        `;
-
-
-        const stillMoving =
-            Math.abs(mouseX - currentX) > 0.001 ||
-            Math.abs(mouseY - currentY) > 0.001;
-
-
-        if (stillMoving) {
-
-            requestAnimationFrame(
-                animateHero
-            );
-
-        } else {
-
-            heroAnimating = false;
-
-        }
-
-    }
-
-}
 
 
 /* =========================================================
