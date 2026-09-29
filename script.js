@@ -316,6 +316,7 @@ const projects = [
         'assets/constcomercial4.JPG',
         'assets/constcomercial2.JPG',
         'assets/constcomercial3.jpeg',
+        'assets/constcomercial.jpg',
         'assets/constcomercial5.JPG',
         'assets/constcomercial6.JPG'
     ]
