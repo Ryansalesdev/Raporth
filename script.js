@@ -329,6 +329,8 @@ const projects = [
         
         t: 'Flats',
         imgs: [
+
+            'assets/flatscapa.JPEG',
             'assets/flats01.JPEG',
             'assets/flats02.JPEG',
             'assets/flats03.JPEG'

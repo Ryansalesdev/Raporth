@@ -2818,3 +2818,47 @@ footer .logo-mark{
         justify-content: flex-start;
     }
 }
+
+
+/* ===== POSIÇÃO DO CONTEÚDO DO HERO ===== */
+
+.hero-inner{
+    display:flex;
+    flex-direction:column;
+}
+
+/* Eyebrow */
+.hero .eyebrow-row{
+    order:1;
+    position:relative;
+    top:-140px;
+}
+
+/* Botão */
+.hero .hero-ctas{
+    order:2;
+    margin-bottom:2rem;
+    position:relative;
+    top:-140px;
+}
+
+/* Slogan */
+.hero h1.display{
+    order:3;
+    margin-bottom:0;
+    position:relative;
+    top:-140px;
+}
+
+
+/* ===== MOBILE ===== */
+
+@media (max-width:767px){
+
+    .hero .eyebrow-row,
+    .hero .hero-ctas,
+    .hero h1.display{
+        top:-60px;
+    }
+
+}
