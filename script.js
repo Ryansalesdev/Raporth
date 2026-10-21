@@ -307,7 +307,10 @@ const projects = [
         imgs: [
             'assets/fachada-01.jpg',
             'assets/fachada-02.jpg',
-            'assets/fachada-03.jpg'
+            'assets/fachada-03.jpg',
+            'assets/residencial/01.JPG',
+            'assets/residencial/02.JPG'
+            
         ]
     },
        {
@@ -316,7 +319,6 @@ const projects = [
         'assets/constcomercial4.JPG',
         'assets/constcomercial2.JPG',
         'assets/constcomercial3.jpeg',
-
         'assets/constcomercial5.JPG',
         'assets/constcomercial6.JPG'
     ]
@@ -333,7 +335,10 @@ const projects = [
             'assets/flatscapa.JPEG',
             'assets/flats01.JPEG',
             'assets/flats02.JPEG',
-            'assets/flats03.JPEG'
+            'assets/flats03.JPEG',
+            'assets/flats/doceria.jpg',
+            'assets/flats/02.png'
+
         ]
     },
 
@@ -342,7 +347,11 @@ const projects = [
         imgs: [
             'assets/reforma 01.jpg',
             'assets/reforma 02.jpg',
-            'assets/reforma 03.jpg'
+            'assets/reforma 03.jpg',
+            'assets/reforma-comercial/01.jpg',
+            'assets/reforma-comercial/02.jpg',
+            'assets/reforma-comercial/04.jpg',
+            'assets/reforma-comercial/03.jpg'
         ]
     },
 
@@ -352,7 +361,11 @@ const projects = [
         imgs: [
             'assets/residencial 01.jpg',
             'assets/residencial 02.jpg',
-            'assets/residencial 03.jpg'
+            'assets/residencial 03.jpg',
+            'assets/reforma-residencial/r1.jpg',
+            'assets/reforma-residencial/r2.jpg'
+            
+            
         ]
     },
 
@@ -363,7 +376,13 @@ const projects = [
         imgs: [
             'assets/fachada-r01.jpg',
             'assets/imagem interna-01.jpg',
-            'assets/imagem interna-02.jpg'
+            'assets/imagem interna-02.jpg',
+            'assets/projeto3d/NOTURNA 02.png',
+            'assets/projeto3d/LAZER DIURNA 02.JPG',
+            'assets/projeto3d/social3.jpg',
+            'assets/projeto3d/p01.jpeg',
+            'assets/projeto3d/p02.jpeg'
+
         ]
     },
 
